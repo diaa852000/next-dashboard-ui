@@ -19,7 +19,7 @@ export default function DashboardLayout({
                         width={32}
                         height={32}
                     />
-                    <span className="hidden lg:block">SchooLame</span>
+                    <span className="hidden lg:block font-bold">SchooLame</span>
                 </Link>
                 <Menu/>
             </div>
