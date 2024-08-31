@@ -1,30 +1,26 @@
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role, studentsData, teachersData } from "@/lib/data";
+import { classesData, role, subjectsData } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 
-type Student = {
+type Class = {
     id: number;
-    studentId: string;
     name: string;
-    email?: string;
-    photo: string;
-    phone?: string;
+    capacity: number;
     grade: number;
-    class: string;
-    address: string;
+    supervisor: string;
 }
 
 const columns = [
     {
-        header: "Info",
-        accessor: "info",
+        header: "Class Name",
+        accessor: "name",
     },
     {
-        header: "Student ID",
-        accessor: "studentId",
+        header: "Capacity",
+        accessor: "capacity",
         className: "hidden md:table-cell"
     },
     {
@@ -33,14 +29,9 @@ const columns = [
         className: "hidden md:table-cell"
     },
     {
-        header: "Phone",
-        accessor: "phone",
-        className: "hidden lg:table-cell"
-    },
-    {
-        header: "Address",
-        accessor: "address",
-        className: "hidden lg:table-cell"
+        header: "Supervisor",
+        accessor: "supervisor",
+        className: "hidden md:table-cell"
     },
     {
         header: "Actions",
@@ -49,32 +40,19 @@ const columns = [
 ]
 
 
-export default function StudentsListPage() {
-    const renderRow = (item: Student) => (
+export default function ClassesListPage() {
+    const renderRow = (item: Class) => (
         <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-PurpleLight">
-            <td className="flex items-center gap-4 p-4">
-                <Image
-                    src={item.photo}
-                    alt=""
-                    width={40}
-                    height={40}
-                    className="md:hidden xl:block w-10 h-10 rounded-full object-cover"
-                />
-                <div className="flex flex-col">
-                    <h3 className="font-semibold">{item.name}</h3>
-                    <p className="text-sm text-gray-500">{item.class}</p>
-                </div>
-            </td>
-            <td className="hidden md:table-cell">{item.studentId}</td>
+            <td className="flex items-center gap-4 p-4">{item.name}</td>
             <td className="hidden md:table-cell">{item.grade}</td>
-            <td className="hidden lg:table-cell">{item.phone}</td>
-            <td className="hidden lg:table-cell">{item.address}</td>
+            <td className="hidden md:table-cell">{item.capacity}</td>
+            <td className="hidden md:table-cell">{item.supervisor}</td>
             <td>
                 <div className="flex items-center gap-2">
-                    <Link href={`/list/students/${item.id}`}>
+                    <Link href={`/list/classes/${item.id}`}>
                         <button type="button" className="w-7 h-7 flex items-center justify-center rounded-full bg-Sky">
                             <Image
-                                src={'/view.png'}
+                                src={'/edit.png'}
                                 alt=""
                                 width={16}
                                 height={16}
@@ -100,7 +78,7 @@ export default function StudentsListPage() {
         <div className="bg-white p-4 rounded-md flex-1 m-4 mt-0">
             {/* TOP */}
             <div className="flex items-center justify-between">
-                <h1 className="hidden md:block text-lg font-semibold">All Students</h1>
+                <h1 className="hidden md:block text-lg font-semibold">All Classes</h1>
                 <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
                     <TableSearch />
                     <div className="flex items-center gap-4 self-end">
@@ -137,7 +115,7 @@ export default function StudentsListPage() {
             <Table
                 columns={columns}
                 renderRow={renderRow}
-                data={studentsData}
+                data={classesData}
             />
             {/* PAGINATION */}
             <Pagination />
