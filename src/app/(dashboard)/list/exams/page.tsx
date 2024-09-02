@@ -1,7 +1,9 @@
+import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { examsData, role } from "@/lib/data";
+import { ActionType, TableTypes } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -48,26 +50,11 @@ export default function ExamsListPage() {
             <td className="hidden md:table-cell">{item.date}</td>
             <td>
                 <div className="flex items-center gap-2">
-                    <Link href={`/list/exams/${item.id}`}>
-                        <button type="button" className="w-7 h-7 flex items-center justify-center rounded-full bg-Sky">
-                            <Image
-                                src={'/edit.png'}
-                                alt=""
-                                width={16}
-                                height={16}
-                            />
-                        </button>
-                    </Link>
                     {role === "admin" && (
-                        <button type="button" className="w-7 h-7 flex items-center justify-center rounded-full bg-Purple">
-                            <Image
-                                src={'/delete.png'}
-                                alt=""
-                                width={16}
-                                height={16}
-                            />
-                        </button>
-                    )}
+                        <>
+                            <FormModal table={TableTypes.EXAM} type={ActionType.UPDATE} data={item} />
+                            <FormModal table={TableTypes.EXAM} type={ActionType.DELETE} id={item.id} />
+                        </>)}
                 </div>
             </td>
         </tr>
@@ -98,14 +85,8 @@ export default function ExamsListPage() {
                             />
                         </button>
                         {role === "admin" && (
-                            <button type="button" className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
-                                <Image
-                                    src={'/plus.png'}
-                                    alt=""
-                                    width={14}
-                                    height={14}
-                                />
-                            </button>
+                            <FormModal table={TableTypes.EXAM} type={ActionType.CREATE} />
+
                         )}
                     </div>
                 </div>
